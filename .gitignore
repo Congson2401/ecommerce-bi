@@ -52,8 +52,17 @@ airflow/airflow/logs/
 *.db
 *.db-*
 
-# Data (if sensitive)
-# data/
 
+# Large compressed files
+*.rar
+*.zip
+*.7z
+
+# Power BI
+*.pbix
+*.pbit
+
+# Data
+data/
 # PowerBI temp files
 *.tmp
