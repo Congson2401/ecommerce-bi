@@ -306,4 +306,4 @@ DAG dừng pipeline nếu data cũ hơn 48 giờ (exit code 2).
 > **`dbt/ecommerce_dbt/create_profile.py`** ghi đè `~/.dbt/profiles.yml` — chạy cẩn thận nếu đã có profiles cho project khác.
 
 > **Power BI** cần PostgreSQL đang chạy mới refresh được data — không có cache offline.
-> **Các file .pbix (dashboard) và .rar (raw data) có dung lượng quá lớn nên không được đưa lên đây
+> **Các file .pbix (dashboard) và .rar (raw data)** có dung lượng quá lớn nên không được đưa lên đây
