@@ -49,6 +49,8 @@ dbt/ecommerce_dbt/dbt_packages/
 # Airflow
 airflow/logs/
 airflow/airflow/logs/
+*.db
+*.db-*
 
 # Data (if sensitive)
 # data/
