@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: public
+    database: ecommerce_db
+    schema: public
+    freshness:
+      warn_after: { count: 24, period: hour }
+      error_after: { count: 48, period: hour }
+    loaded_at_field: write_date
+    tables:
+      # === Sales ===
+      - name: sale_order
+      - name: sale_order_line
+
+      # === Purchase ===
+      - name: purchase_order
+      - name: purchase_order_line
+
+      # === Stock & Logistics ===
+      - name: stock_picking
+      - name: stock_move
+      - name: stock_quant
+
+      # === Finance (NEW) ===
+      - name: account_move
+      - name: account_move_line
+      - name: account_payment
+
+      # === Master Data (no freshness) ===
+      - name: stock_location
+        freshness: null
+      - name: product_template
+        freshness: null
+      - name: product_product
+        freshness: null
+      - name: product_category
+        freshness: null
+      - name: product_supplierinfo
+        freshness: null
+      - name: res_partner
+        freshness: null
+      - name: res_country_state
+        freshness: null
+      - name: res_country
+        freshness: null

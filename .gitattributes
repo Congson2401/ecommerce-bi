@@ -1,0 +1,2 @@
+airflow/passwords.json eol=lf
+dbt/ecommerce_dbt/dbt_project.yml eol=lf

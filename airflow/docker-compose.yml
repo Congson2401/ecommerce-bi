@@ -1,0 +1,25 @@
+version: '3'
+services:
+
+  sleek-airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sleek-airflow:latest
+
+    volumes:
+      - ./airflow:/opt/airflow
+      - ../dbt/ecommerce_dbt:/opt/airflow/dbt/ecommerce_dbt
+      - ~/.dbt:/opt/airflow/dbt
+
+    ports:
+      - "8081:8080"
+
+    environment:
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: "admin:admin"
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE: "/opt/airflow/passwords.json"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    command: airflow standalone

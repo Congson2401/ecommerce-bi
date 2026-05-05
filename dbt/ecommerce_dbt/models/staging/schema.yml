@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  # === Sales ===
+  - name: stg_sale_orders
+    description: "Cleaned sale orders (exclude draft)"
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+
+  - name: stg_sale_order_lines
+    description: "Cleaned sale order lines (product lines only)"
+    columns:
+      - name: line_id
+        tests: [unique, not_null]
+
+  # === Purchase ===
+  - name: stg_purchase_orders
+    description: "Cleaned purchase orders (exclude draft)"
+    columns:
+      - name: po_id
+        tests: [unique, not_null]
+
+  - name: stg_purchase_order_lines
+    description: "Cleaned purchase order lines"
+    columns:
+      - name: pol_id
+        tests: [unique, not_null]
+
+  # === Stock ===
+  - name: stg_stock_pickings
+    description: "Cleaned stock pickings (exclude draft)"
+    columns:
+      - name: picking_id
+        tests: [unique, not_null]
+
+  - name: stg_stock_moves
+    description: "Completed stock moves with direction classification"
+    columns:
+      - name: move_id
+        tests: [unique, not_null]
+
+  - name: stg_stock_quant
+    description: "Current inventory quantities (positive only)"
+    columns:
+      - name: quant_id
+        tests: [unique, not_null]
+
+  # === Finance (NEW) ===
+  - name: stg_invoices
+    description: "Customer invoices and credit notes (out_invoice, out_refund)"
+    columns:
+      - name: invoice_id
+        tests: [unique, not_null]
+      - name: move_type
+        tests:
+          - accepted_values:
+              values: ['out_invoice', 'out_refund']
+
+  - name: stg_invoice_lines
+    description: "Invoice line items (product lines, posted only)"
+    columns:
+      - name: invoice_line_id
+        tests: [unique, not_null]
+
+  - name: stg_payments
+    description: "Posted payments (inbound customer payments)"
+    columns:
+      - name: payment_id
+        tests: [unique, not_null]
+      - name: payment_type
+        tests:
+          - accepted_values:
+              values: ['inbound', 'outbound']
+
+  # === Master Data ===
+  - name: stg_products
+    description: "Active products with category info"
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+
+  - name: stg_partners
+    description: "Active partners (customers + suppliers)"
+    columns:
+      - name: partner_id
+        tests: [unique, not_null]
+
+  - name: stg_locations
+    description: "Active stock locations"
+    columns:
+      - name: location_id
+        tests: [unique, not_null]
+
+  - name: stg_supplier_info
+    description: "Supplier pricing and lead time info"
+    columns:
+      - name: supplierinfo_id
+        tests: [unique, not_null]

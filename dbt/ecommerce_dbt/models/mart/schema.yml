@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  # === Dimensions ===
+  - name: dim_date
+    description: "Date dimension with Vietnamese calendar attributes and flash sale flags"
+    columns:
+      - name: date_id
+        tests: [unique, not_null]
+
+  - name: dim_product
+    description: "Product dimension with category, brand, pricing, and margin"
+    columns:
+      - name: product_id
+        tests: [unique, not_null]
+
+  - name: dim_partner
+    description: "Partner dimension (customers + suppliers) with geography and VIP flag"
+    columns:
+      - name: partner_id
+        tests: [unique, not_null]
+
+  - name: dim_location
+    description: "Stock location dimension with usage classification"
+    columns:
+      - name: location_id
+        tests: [unique, not_null]
+
+  - name: dim_payment_method
+    description: "Payment method dimension (COD, MoMo, ZaloPay, bank transfer, etc.)"
+    columns:
+      - name: method_id
+        tests: [unique, not_null]
+      - name: method_key
+        tests: [unique, not_null]
+
+  # === Facts ===
+  - name: fact_sales
+    description: "Sales fact at order line grain — revenue, cost, margin, return flag"
+    columns:
+      - name: id
+        tests: [unique, not_null]
+      - name: date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_id
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('dim_partner')
+              field: partner_id
+
+  - name: fact_delivery
+    description: "Delivery fact — picking status, delay, on-time tracking"
+    columns:
+      - name: id
+        tests: [unique, not_null]
+      - name: date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+  - name: fact_inventory
+    description: "Inventory movement fact — inbound/outbound qty, running stock"
+    columns:
+      - name: id
+        tests: [unique, not_null]
+      - name: date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+  - name: fact_purchasing
+    description: "Purchasing fact — PO lines, lead times, supplier performance"
+    columns:
+      - name: id
+        tests: [unique, not_null]
+      - name: date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+
+  - name: fact_finance
+    description: "Finance fact — invoices, payments, DSO, payment methods"
+    columns:
+      - name: id
+        tests: [unique, not_null]
+      - name: date_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_id
+      - name: partner_id
+        tests:
+          - relationships:
+              to: ref('dim_partner')
+              field: partner_id
+      - name: method_id
+        tests:
+          - relationships:
+              to: ref('dim_payment_method')
+              field: method_id
+              config:
+                where: "method_id IS NOT NULL"

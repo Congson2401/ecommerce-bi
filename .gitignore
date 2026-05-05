@@ -1,0 +1,57 @@
+.mcp.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# DBT
+dbt/ecommerce_dbt/target/
+dbt/ecommerce_dbt/logs/
+dbt/ecommerce_dbt/dbt_packages/
+
+# Airflow
+airflow/logs/
+airflow/airflow/logs/
+
+# Data (if sensitive)
+# data/
+
+# PowerBI temp files
+*.tmp
